@@ -1,5 +1,5 @@
 <template>
-  <section class="src-components-index-formulario">
+  <section class="src-components-forms-user">
     <div class="jumbotron">
       <vue-form :state="formState" @submit.prevent="enviar()">
         <h1>Registration</h1>
@@ -18,7 +18,7 @@
           />
 
           <field-messages name="name" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="required" class="alert alert-danger mt-1">This field is required</div>
             <div slot="no-espacios" class="alert alert-danger mt-1">
               El campo no permite espacios intermedios.
             </div>     
@@ -38,7 +38,7 @@
           />
 
           <field-messages name="email" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>     
+            <div slot="required" class="alert alert-danger mt-1">This field is required</div>     
           </field-messages> 
         </validate>
 
@@ -57,8 +57,8 @@
           />
 
           <field-messages name="password" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>
-            <div slot="min" class="alert alert-danger mt-1">
+            <div slot="required" class="alert alert-danger mt-1">This field is required</div>
+            <div slot="minlength" class="alert alert-danger mt-1">
               Password min length: {{passwordMin}}
             </div>
             <div slot="no-espacios" class="alert alert-danger mt-1">
@@ -76,7 +76,7 @@
 <script lang="js">
 
   export default  {
-    name: 'src-components-index-formulario',
+    name: 'src-components-forms-user',
     props: [],
     mounted () {
 
@@ -110,7 +110,7 @@
 </script>
 
 <style scoped lang="css">
-  .src-components-index-formulario {
+  .src-components-forms-user {
 
   }
   h1{
@@ -121,13 +121,6 @@
     text-align: center;
     font-weight: bold;
     color: rgb(159, 9, 157);
-  }
-  h6{
-    font-size: 25px;
-    font-weight: bold;
-  }
-  label{
-    font-weight: bold;
   }
 </style>
 

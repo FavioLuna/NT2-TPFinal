@@ -13,8 +13,8 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link to="/formulario">
-              <a class="nav-link" href="#">Registration</a>
+            <router-link to="/user">
+              <a class="nav-link" href="#">User registration</a>
             </router-link>
           </li>
         </ul>
