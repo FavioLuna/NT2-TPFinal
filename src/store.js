@@ -33,6 +33,16 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
           console.error('Error en postUsuario()', error.message)
         }
       },
+      async login({commit}, user) {
+        try {
+          await axios.post(URL + '/user/login', user, {'content-type' : 'application/json'})
+          console.log('AXIOS POST user', user)
+          commit('saveUser', true)
+        }
+        catch(error) {
+          console.error('Error en login()', error.message)
+        }
+      },
       clearUsers({commit}){
         commit('clearU')
       }

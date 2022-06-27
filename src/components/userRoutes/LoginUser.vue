@@ -1,11 +1,12 @@
 <template>
-  <section class="src-components-login-user">
+  <section class="src-components-forms-user">
     <div class="jumbotron">
       <vue-form :state="formState" @submit.prevent="enviar()">
-        <h1>Registration</h1>
-        <hr><hr>       
+        <h1>Login</h1>
+        <hr><hr>      
+
         <validate tag="div">
-          <label for="email">Email</label>
+          <label for="email">email</label>
           <input 
           type="email" 
           id="email" 
@@ -22,9 +23,9 @@
         </validate>
 
         <validate tag="div">
-          <label for="password">Password</label>
+          <label for="password">password</label>
           <input 
-          type="text" 
+          type="password" 
           id="password" 
           class="form-control" 
           autocomplete="off" 
@@ -46,7 +47,7 @@
           </field-messages> 
         </validate>
 
-       <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="enviar()">Enviar</button>
+       <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="login()">Enviar</button>
       </vue-form>
      </div>
   </section>
@@ -55,7 +56,7 @@
 <script lang="js">
 
   export default  {
-    name: 'src-components-login-user',
+    name: 'src-components-forms-user',
     props: [],
     mounted () {
 
@@ -70,7 +71,6 @@
     methods: {
       getInicialData(){
         return{
-          name:'',
           email:'',
           password: '',
         }
@@ -79,8 +79,34 @@
         this.formData = this.getInicialData();
         this.formState._reset();
       },
+      login(){
+        let user = {
+          email : this.formData.email, 
+          password: this.formData.password
+        }
+        this.$store.dispatch("login", user)
+      }
     },
     computed: {
 
     }
 }
+
+
+</script>
+
+<style scoped lang="css">
+  .src-components-forms-user {
+
+  }
+  h1{
+    text-align: center;
+    font-weight: bold;
+  }
+  h2{
+    text-align: center;
+    font-weight: bold;
+    color: rgb(159, 9, 157);
+  }
+</style>
+
