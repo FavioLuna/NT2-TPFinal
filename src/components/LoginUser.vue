@@ -1,32 +1,11 @@
 <template>
-  <section class="src-components-forms-user">
+  <section class="src-components-login-user">
     <div class="jumbotron">
       <vue-form :state="formState" @submit.prevent="enviar()">
         <h1>Registration</h1>
-        <hr><hr>
+        <hr><hr>       
         <validate tag="div">
-          <label for="name">name</label>
-          <input 
-          type="text" 
-          id="name" 
-          class="form-control" 
-          autocomplete="off" 
-          v-model.trim="formData.name" 
-          required
-          name="name"
-          no-espacios
-          />
-
-          <field-messages name="name" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">This field is required</div>
-            <div slot="no-espacios" class="alert alert-danger mt-1">
-              El campo no permite espacios intermedios.
-            </div>     
-          </field-messages> 
-        </validate>        
-
-        <validate tag="div">
-          <label for="email">email</label>
+          <label for="email">Email</label>
           <input 
           type="email" 
           id="email" 
@@ -43,9 +22,9 @@
         </validate>
 
         <validate tag="div">
-          <label for="password">password</label>
+          <label for="password">Password</label>
           <input 
-          type="password" 
+          type="text" 
           id="password" 
           class="form-control" 
           autocomplete="off" 
@@ -67,7 +46,7 @@
           </field-messages> 
         </validate>
 
-       <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="postUsuario()">Enviar</button>
+       <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="enviar()">Enviar</button>
       </vue-form>
      </div>
   </section>
@@ -76,7 +55,7 @@
 <script lang="js">
 
   export default  {
-    name: 'src-components-forms-user',
+    name: 'src-components-login-user',
     props: [],
     mounted () {
 
@@ -100,35 +79,8 @@
         this.formData = this.getInicialData();
         this.formState._reset();
       },
-      postUsuario(){
-        let newUser = {
-          name : this.formData.name, 
-          email : this.formData.email, 
-          password: this.formData.password
-        }
-        this.$store.dispatch("postUser", newUser)
-      }
     },
     computed: {
 
     }
 }
-
-
-</script>
-
-<style scoped lang="css">
-  .src-components-forms-user {
-
-  }
-  h1{
-    text-align: center;
-    font-weight: bold;
-  }
-  h2{
-    text-align: center;
-    font-weight: bold;
-    color: rgb(159, 9, 157);
-  }
-</style>
-

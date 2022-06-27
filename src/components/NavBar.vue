@@ -17,6 +17,12 @@
               <a class="nav-link" href="#">User registration</a>
             </router-link>
           </li>
+
+          <li class="nav-item">
+            <router-link to="/user/login">
+              <a class="nav-link" href="#">Login</a>
+            </router-link>
+          </li>
         </ul>
       </div>
     </nav>
