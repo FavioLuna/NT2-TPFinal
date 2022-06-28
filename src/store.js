@@ -11,11 +11,14 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
     state:{
       users:[],
       user:{},
-      isAuth: false,
-      status: false
+      isAuth: false
+      //--------
     },
     actions:{
-      async getUsuariosAxios({commit}){
+      //---------------------------------
+      //          User Actions
+      //---------------------------------
+      async getUsuarios({commit}){
         try {
           let  {data}  = await axios(URL + '/users')
           commit('getUsers', data)
@@ -23,39 +26,102 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
           console.error('Error Axios', error)
         }
       },
-      async postUser({commit}, newUser) {
+
+      async postUser({commit}, credentials) {
         try {
-          await axios.post(URL + '/user', newUser, {'content-type' : 'application/json'})
-          console.log('AXIOS POST user', newUser)
-          commit('saveUser', true)
+          const {data} = await axios.post(URL + '/user', credentials, {'content-type' : 'application/json'})
+          console.log('AXIOS POST user', data)
+          if (data) {
+            commit('setIsAuth', true);
+            commit('saveUser', data);
+          }
         }
         catch(error) {
           console.error('Error en postUsuario()', error.message)
         }
       },
-      async login({commit}, user) {
+
+      async changeName({commit}, credentials) {
         try {
-          await axios.post(URL + '/user/login', user, {'content-type' : 'application/json'})
-          console.log('AXIOS POST user', user)
-          commit('saveUser', true)
+          const {data} = await axios.post(URL + '/user/settings/' + this.state.user["id"], credentials, {'content-type' : 'application/json'})
+          console.log('AXIOS POST user', data)
+          if (data) {
+            commit('setIsAuth', true);
+            commit('saveUser', data["user"]);
+          }
+        }
+        catch(error) {
+          console.error('Error en postUsuario()', error.message)
+        }
+      },
+
+      async changePassword({commit}, credentials) {
+        try {
+          const {data} = await axios.post(URL + '/user/settings/change-password/' + this.state.user["id"], credentials, {'content-type' : 'application/json'})
+          console.log('AXIOS POST user', data)
+          if (data) {
+            commit('setIsAuth', true);
+            commit('saveUser', data["user"]);
+          }
+        }
+        catch(error) {
+          console.error('Error en postUsuario()', error.message)
+        }
+      },
+
+      async login({commit}, credentials) {
+        try {
+          const {data} = await axios.post(URL + '/user/login', credentials, {'content-type' : 'application/json'})
+          console.log('AXIOS POST user', data)
+          localStorage.setItem('token', data.token);
+
+          commit('setIsAuth', true);
+          commit('saveUser', data["user"]);
         }
         catch(error) {
           console.error('Error en login()', error.message)
         }
       },
+      async logout({commit}) {
+        const token = localStorage.getItem('token');
+        try {
+          await axios.post(URL + '/logout', {} , {
+            headers: {
+              'Authorization': 'Bearer ' + token
+            }
+          });
+  
+          localStorage.removeItem('token');
+
+          commit('setIsAuth', false);
+          commit('saveUser', {});
+  
+        } catch (error) {
+          console.log('Error en login()', error.message);
+        }
+      },
       clearUsers({commit}){
         commit('clearU')
       }
+      //---------------------------------
+      //          Shirt Actions
+      //---------------------------------
     }, 
     mutations:{
-      getUsers(state, rta){
-        state.users = rta
+      getUsers(state, data){
+        state.users = data
       },
-      saveUser(state, status){
-        state.status = status
+      saveUser(state, userData){
+        state.user = userData;
+      },
+      setIsAuth(state, rta){
+        state.isAuth = rta;
       },
       clearU(state){
         state.users = 0
       }
+      //---------------------------------
+      //          Shirt Mutations
+      //---------------------------------
     }
 })

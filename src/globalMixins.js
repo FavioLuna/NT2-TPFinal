@@ -12,6 +12,12 @@ const miMixinGlobal = {
     computed: {
         users(){
             return this.$store.state.users
+        },
+        isAuth(){
+            return this.$store.state.isAuth
+        },
+        getUserLoged(){
+            return this.$store.state.user
         }
     }
 }

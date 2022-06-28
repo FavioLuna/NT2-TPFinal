@@ -32,18 +32,11 @@
           v-model.trim="formData.password" 
           required
           name="password"
-          :minlength="passwordMin"
           no-espacios
           />
 
           <field-messages name="password" show="$dirty">
             <div slot="required" class="alert alert-danger mt-1">This field is required</div>
-            <div slot="minlength" class="alert alert-danger mt-1">
-              Password min length: {{passwordMin}}
-            </div>
-            <div slot="no-espacios" class="alert alert-danger mt-1">
-              El campo no permite espacios intermedios.
-            </div>   
           </field-messages> 
         </validate>
 
@@ -65,7 +58,7 @@
       return {
         formState: {},
         formData: this.getInicialData(),
-        passwordMin: 8
+        logs: []
       }
     },
     methods: {
@@ -80,11 +73,8 @@
         this.formState._reset();
       },
       login(){
-        let user = {
-          email : this.formData.email, 
-          password: this.formData.password
-        }
-        this.$store.dispatch("login", user)
+        this.logs.push(this.formData)
+        this.$store.dispatch("login", this.formData)
       }
     },
     computed: {

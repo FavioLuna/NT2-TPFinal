@@ -67,6 +67,10 @@
           </field-messages> 
         </validate>
 
+        <hr>
+        <a href="http://localhost:8080/user/login">Ya tengo un usuario</a>
+        <hr>
+        
        <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="postUsuario()">Enviar</button>
       </vue-form>
      </div>
