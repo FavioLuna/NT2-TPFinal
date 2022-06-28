@@ -25,6 +25,12 @@
             </router-link>
           </li>
 
+          <li v-if="!isAuth" class="nav-item">
+            <router-link to="/shirt">
+              <a class="nav-link" href="#">Create Shirt</a>
+            </router-link>
+          </li>
+
           <li v-if="isAuth" class="nav-item">
             <router-link to="/user/settings">
               <a class="nav-link" href="#">User</a>
@@ -61,7 +67,5 @@
 </script>
 
 <style scoped lang="css">
-  .src-components-nav-bar {
 
-  }
 </style>

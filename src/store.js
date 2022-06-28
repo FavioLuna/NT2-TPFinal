@@ -102,7 +102,30 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       },
       clearUsers({commit}){
         commit('clearU')
+      },
+
+      async postShirt({commit}, credentials) {
+        try {
+          const {data} = await axios.post(URL + '/shirt', credentials, {'content-type' : 'application/json'})
+          console.log('AXIOS POST shirt', data)
+          if (data) {
+            commit('saveShirt', data);
+          }
+        }
+        catch(error) {
+          console.error('Error en postShirt()', error.message)
+        }
+
+    },
+
+    async getShirts({commit}){
+      try {
+        let  {data}  = await axios(URL + '/shirts')
+        commit('getShirts', data)
+      } catch (error) {
+        console.error('Error Axios', error)
       }
+    },
       //---------------------------------
       //          Shirt Actions
       //---------------------------------
@@ -119,9 +142,19 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       },
       clearU(state){
         state.users = 0
-      }
+      },
       //---------------------------------
       //          Shirt Mutations
       //---------------------------------
+
+      saveShirt(state, shirtData){
+        state.shirt = shirtData
+      },
+
+      getShirts(state, data){
+        state.shirts = data
+      },
+
+
     }
 })
