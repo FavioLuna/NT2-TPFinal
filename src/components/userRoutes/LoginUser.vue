@@ -47,7 +47,6 @@
 </template>
 
 <script lang="js">
-
   export default  {
     name: 'src-components-forms-user',
     props: [],
@@ -56,17 +55,34 @@
     },
     data () {
       return {
-        formState: {},
-        formData: this.getInicialData(),
-        logs: []
+        user: new User('', ''),
+        loading: false,
+        message: ''
       }
     },
     methods: {
-      getInicialData(){
-        return{
-          email:'',
-          password: '',
-        }
+      handleLogin() {
+        this.loading = true;
+        this.$validator.validateAll().then(isValid => {
+          if (!isValid) {
+            this.loading = false;
+            return;
+          }
+          if (this.user.email && this.user.password) {
+            this.$store.dispatch('auth/login', this.user).then(
+              () => {
+                this.$router.push('/user');
+              },
+              error => {
+                this.loading = false;
+                this.message =
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+              }
+            );
+          }
+        });
       },
       enviar(){
         this.formData = this.getInicialData();
@@ -78,7 +94,13 @@
       }
     },
     computed: {
-
+      loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+      },
+      created() {
+      if (this.loggedIn) {
+        this.$router.push('/profile');
+      }
     }
 }
 

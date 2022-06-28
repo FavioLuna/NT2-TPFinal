@@ -14,19 +14,19 @@
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <router-link v-if="!isAuth" to="/user">
+            <router-link to="/user">
               <a class="nav-link" href="#">User registration</a>
             </router-link>
           </li>
 
           <li class="nav-item">
-            <router-link v-if="!isAuth" to="/user/login">
+            <router-link  to="/user/login">
               <a class="nav-link" href="#">Login</a>
             </router-link>
           </li>
 
           <li class="nav-item">
-            <router-link v-if="isAuth" to="/user/settings">
+            <router-link to="/user/settings">
               <a class="nav-link" href="#">User</a>
             </router-link>
           </li>

@@ -3,14 +3,13 @@
     <div class="jumbotron">
         <h1>User Info</h1>
         <hr>
-        <h3>{{this.getUserLoged["_id"]}}</h3>
         <h3>Name: {{this.getUserLoged["name"]}}</h3>
         <hr>
         <h3>Email: {{this.getUserLoged["email"]}}</h3>
         <hr>
         <h3>Fecha de creacion: {{this.getUserLoged["createdAt"]}}</h3>
         <hr>
-        <button class="btn btn-success my-4" @click="change()">Cambiar información</button>
+        <button class="btn btn-success my-4" @click="change()">Cambiar nombre</button>
 
         <div v-show="changeInfo" class="jumbotron">
             <vue-form  :state="formState" @submit.prevent="enviar()">
@@ -18,7 +17,7 @@
             <hr><hr>      
 
             <validate tag="div">
-                <label for="name">name</label>
+                <label for="name">new name</label>
                 <input 
                 type="name" 
                 id="name" 
@@ -62,9 +61,7 @@
       getInicialData(){
         return{
           name:'',
-          email:'',
-          password: '',
-          changeInfo: false,
+          changeInfo: false
         }
       },
       change(){
@@ -75,7 +72,10 @@
         this.formState._reset();
       },
       changeName(){
-        this.$store.dispatch("changeName", this.formData)
+        const token = this.getToken()
+        const credentials = {... this.formData, token}
+        console.log(credentials)
+        this.$store.dispatch("changeName", credentials)
       }
     },
     computed: {
