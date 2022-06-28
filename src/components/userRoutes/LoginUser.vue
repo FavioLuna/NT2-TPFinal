@@ -55,10 +55,11 @@
   export default  {
     name: 'src-components-forms-user',
     props: [],
-    mounted () {
-      
-    },
     beforeMount(){
+
+    },
+    mounted () {
+      console.log('mounted')
       this.$store.dispatch("getUsers")
     },
     data () {

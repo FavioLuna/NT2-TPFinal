@@ -44,10 +44,10 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
           }
         }
         catch(error) {
-          console.error('Error en postUsers()', error.message)
+          console.error('Error en changeName()', error.message)
         }
       },
-      async changePass({commit}, newUser) {
+/*       async changePass({commit}, newUser) {
         try {
           let { data: user } = await axios.put(URL + '/user/' + `${this.state.user.id}`, newUser, {'content-type' : 'application/json'})
           console.log('AXIOS Put user name', user)
@@ -59,16 +59,18 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         catch(error) {
           console.error('Error en postUsers()', error.message)
         }
-      },
+      }, */
       async deleteUser({commit}) {
         try {
           await axios.delete(URL + '/user/' + `${this.state.user.id}`,  {'content-type' : 'application/json'})
-          console.log('AXIOS Put user name')
-          commit('saveUser', {})
+          console.log('AXIOS delete user')
+          commit('isAuth', false)
+          commit('saveUser', null)
+          console.log(this.state.user)
           commit('isLog', false)
         }
         catch(error) {
-          console.error('Error en postUsers()', error.message)
+          console.error('Error en deleteUser()', error.message)
         }
       },
       login({commit}, user){
@@ -80,7 +82,7 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       },
       logout({commit}){
         commit('isAuth', false)
-        commit('saveUser', {})
+        commit('saveUser', null)
         commit('isLog', false)
       },
       clearUsers({commit}){

@@ -13,11 +13,18 @@
         <hr>
         <button class="btn btn-success my-4" @click="change()">Cambiar nombre</button>
 
-        <button class="btn btn-success ml-4" @click="changePassword()">Cambiar password</button>
+        <!-- <button class="btn btn-success ml-4" @click="changePassword()">Cambiar password</button> -->
 
-        <button class="btn btn-danger ml-4" @click="logout()">Logout</button>
+        <button class="btn btn-danger ml-4" @click="doLogout()">Logout</button>
+
+        <button class="btn btn-danger ml-4" @click="deleteU()">Delete User</button>
+
 
         <div v-if="success" class="alert alert-success" role="alert">
+          Changed successfully
+        </div>
+
+        <div v-if="borrar" class="alert alert-success" role="alert">
           Changed successfully
         </div>
 
@@ -65,15 +72,14 @@
         formData: this.getInicialData(),
         passwordMin: 8,
         changeInfo: false,
-        success: false
+        success: false,
+        borrar: false,
       }
     },
     methods: {
       getInicialData(){
         return{
-          name:'',
-          changeInfo: false
-          
+          name:'',      
         }
       },
       change(){
@@ -102,6 +108,19 @@
           this.success= false 
           },
         3000)
+      },
+      doLogout(){
+        this.$store.dispatch("logout")
+        this.$router.push("/")
+      },
+      deleteU(){
+        this.borrar = true,
+        setTimeout(() => {
+          this.borrar = false 
+          },
+        3000)
+        this.$store.dispatch("deleteUser")
+        this.$router.push("/")
       }
     },
     computed: {

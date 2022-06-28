@@ -1,7 +1,12 @@
 <template>
   <section class="src-components-forms-user">
     <div class="jumbotron">
-      <vue-form :state="formState" @submit.prevent="enviar()">
+
+      <div v-if="success" class="alert alert-success" role="alert">
+        Register successfully
+      </div>
+
+      <vue-form v-if="!success" :state="formState" @submit.prevent="enviar()">
         <h1>Registration</h1>
         <hr><hr>
         <validate tag="div">
@@ -138,6 +143,7 @@
         passwordMin: 8,
         edadMin: 16,
         edadMax: 120,
+        success: false
       }
     },
     methods: {
@@ -162,8 +168,14 @@
           password: this.formData.password,
           edad: this.formData.edad
         }
+        this.success = true
         this.$store.dispatch("postUser", newUser)
-        this.$router.push('/login')
+        setTimeout(()=> {
+          this.success = false
+          this.$router.push('/user/login')}, 
+          2000
+          )
+        
       }
     },
     computed: {

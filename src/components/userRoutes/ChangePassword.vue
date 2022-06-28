@@ -1,4 +1,4 @@
-<template>
+/* <template>
   <section class="src-components-forms-user">
     <div class="jumbotron">
       <vue-form :state="formState" @submit.prevent="enviar()">
@@ -93,8 +93,8 @@
         if (check) {
           let newUser = {
           password : this.formData.password,
-        }
-        this.$store.dispatch("changePass", newUser)
+          }
+          this.$store.dispatch("changePass", newUser)
         }
       },
       checkPassword(password, password2){
@@ -124,4 +124,4 @@ h3 {
   font-weight: bold;
 
 }
-</style>
+</style> */
