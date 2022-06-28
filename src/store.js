@@ -4,7 +4,6 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
-const URLShirt = 'https://628e9f0c368687f3e719d47f.mockapi.io/shirts'
 const URL = 'https://628e9f0c368687f3e719d47f.mockapi.io'
 
 
@@ -19,6 +18,9 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       isLog: false
     },
     actions:{
+      //---------------------------------
+      //          User Actions
+      //---------------------------------
       async getUsers({commit}){
         try {
           let  {data}  = await axios(URL + '/user' )
@@ -88,17 +90,12 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         commit('saveUser', null)
         commit('isLog', false)
       },
-      async getShirtsAxios({commit}){
-        try {
-          let {data}  = await axios(URLShirt)
-          commit('getShirts', data)
-        } catch (error) {
-          console.error('Error Axios', error)
-        }
-      },
+      //---------------------------------
+      //          Shirt Actions
+      //---------------------------------
       async postShirt({commit}, newShirt) {
         try {
-          let { data: shirt } = await axios.post(URLShirt, newShirt, {'content-type' : 'application/json'})
+          let { data: shirt } = await axios.post(URL + '/shirt', newShirt, {'content-type' : 'application/json'})
           console.log('AXIOS POST shirt', shirt)
           commit('postShirt', true)
         }
@@ -106,15 +103,14 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
           console.error('Error en postShirt()', error.message)
         }
 
-    },
-    clearShirts({commit}){
-      commit('clearS')
-    },
+       },
+        clearShirts({commit}){
+        commit('clearS')
+       },
   
-
     async getShirts({commit}){
       try {
-        let  {data}  = await axios(URL + '/shirts')
+        let  {data}  = await axios.get(URL + '/shirt')
         commit('getShirts', data)
       } catch (error) {
         console.error('Error Axios', error)
@@ -145,13 +141,11 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         console.error('Error en changeName()', error.message)
       }
     },
-
-    
-      //---------------------------------
-      //          Shirt Actions
-      //---------------------------------
     }, 
     mutations:{
+      //---------------------------------
+      //          User Mutations
+      //---------------------------------
       getUsers(state, rta){
         state.users = rta
       },
@@ -171,6 +165,9 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       clearU(state){
         state.users = 0
       },
+      //---------------------------------
+      //          Shirt Mutations
+      //---------------------------------
       getShirts(state, rta){
         state.shirts = rta
       },

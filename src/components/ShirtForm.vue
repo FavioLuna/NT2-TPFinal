@@ -14,6 +14,7 @@
           v-model.trim="formData.name" 
           required
           name="name"
+          no-espacios
           />
 
           <field-messages name="name" show="$dirty">
@@ -48,6 +49,7 @@
           v-model.trim="formData.img" 
           required
           name="img"
+          no-espacios
           />
 
           <field-messages name="img" show="$dirty">
@@ -68,6 +70,7 @@
           v-model="formData.size" 
           required
           name="size"
+          no-espacios
           />
 
           <field-messages name="size" show="$dirty">
@@ -85,6 +88,7 @@
           v-model="formData.number" 
           required
           name="number"
+          no-espacios
           />
 
           <field-messages name="number" show="$dirty">
@@ -102,6 +106,7 @@
           v-model="formData.year" 
           required
           name="year"
+          no-espacios
           />
 
           <field-messages name="year" show="$dirty">
@@ -120,6 +125,7 @@
           required
           name="price"
           :minPrice="priceMin"
+          no-espacios
           />
 
           <field-messages name="price" show="$dirty">
@@ -163,8 +169,6 @@
 
           <field-messages name="league" show="$dirty">
             <div slot="required" class="alert alert-danger mt-1">Required</div>
-            
-            
           </field-messages> 
         </validate>
 
@@ -193,7 +197,16 @@
         numeroMin: 1,
         numMax: 99,
         priceMin: 1,
-        
+        minSize: 20,
+        maxSize: 60,
+        minDescription: 10,
+        maxDescription: 100,
+        minYear: 1910,
+        maxYear: 2022,
+        maxTeam: 20,
+        minTeam: 2,
+        minLeague: 2,
+        maxLeague: 20
       }
     },
    methods: {
@@ -212,7 +225,7 @@
         }
       },
 
-enviar(){
+      enviar(){
         this.formData = this.getInicialData();
         this.formState._reset();
       },
@@ -220,7 +233,7 @@ enviar(){
       postShirt(){
          let newShirt = {
           name : this.formData.name, 
-           number: this.formData.number,
+          number: this.formData.number,
           description: this.formData.description,
           year: this.formData.year,
           size: this.formData.size,

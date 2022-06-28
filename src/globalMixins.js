@@ -3,8 +3,11 @@ import Vue from 'vue'
 const miMixinGlobal = {
     methods: {
         getUsers(){
-            this.$store.dispatch("getUsuariosAxios")
+            this.$store.dispatch("getUsers")
          },
+         getShirts(){
+            this.$store.dispatch("getShirts")
+         }
     },
     computed: {
         users(){
@@ -18,6 +21,9 @@ const miMixinGlobal = {
         },
         userLoged(){
             return this.$store.state.user
+        },
+        shirts(){
+            return this.$store.state.shirts
         }
     }
 }
