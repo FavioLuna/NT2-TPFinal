@@ -4,12 +4,15 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const URLShirt = 'https://628e9f0c368687f3e719d47f.mockapi.io/shirts'
 const URL = 'https://628e9f0c368687f3e719d47f.mockapi.io'
 
 
 export default new Vuex.Store({ //Funcion constructora estatica, construye una instancia de patron de estao global vuex
     state:{
       users:[],
+      shirts:[],
+      entro: false,
       user:{},
       postSuccess: false,
       isAuth: false,
@@ -85,23 +88,29 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         commit('saveUser', null)
         commit('isLog', false)
       },
-      clearUsers({commit}){
-        commit('clearU')
-      },
-
-      async postShirt({commit}, credentials) {
+      async getShirtsAxios({commit}){
         try {
-          const {data} = await axios.post(URL + '/shirt', credentials, {'content-type' : 'application/json'})
-          console.log('AXIOS POST shirt', data)
-          if (data) {
-            commit('saveShirt', data);
-          }
+          let {data}  = await axios(URLShirt)
+          commit('getShirts', data)
+        } catch (error) {
+          console.error('Error Axios', error)
+        }
+      },
+      async postShirt({commit}, newShirt) {
+        try {
+          let { data: shirt } = await axios.post(URLShirt, newShirt, {'content-type' : 'application/json'})
+          console.log('AXIOS POST shirt', shirt)
+          commit('postShirt', true)
         }
         catch(error) {
           console.error('Error en postShirt()', error.message)
         }
 
     },
+    clearShirts({commit}){
+      commit('clearS')
+    },
+  
 
     async getShirts({commit}){
       try {
@@ -123,6 +132,21 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         console.error('Error en deleteShirt()', error.message)
       }
     },
+
+    async changeShirt({commit}, newShirt) {
+      try {
+        let { data: shirt } = await axios.put(URL + '/shirt/' + `${this.state.user.id}`, newShirt, {'content-type' : 'application/json'})
+        commit('saveShirt', shirt)
+        if (shirt.admin) {
+          commit('isAuth', true)
+        }
+      }
+      catch(error) {
+        console.error('Error en changeName()', error.message)
+      }
+    },
+
+    
       //---------------------------------
       //          Shirt Actions
       //---------------------------------
@@ -147,18 +171,14 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       clearU(state){
         state.users = 0
       },
-      //---------------------------------
-      //          Shirt Mutations
-      //---------------------------------
-
-      saveShirt(state, shirtData){
-        state.shirt = shirtData
+      getShirts(state, rta){
+        state.shirts = rta
       },
-
-      getShirts(state, data){
-        state.shirts = data
+      postShirt(state, rta){
+        state.shirt = rta
       },
-
-
+      clearS(state){
+        state.shirts = 0
+      }
     }
 })

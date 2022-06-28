@@ -5,10 +5,6 @@ const miMixinGlobal = {
         getUsers(){
             this.$store.dispatch("getUsuariosAxios")
          },
-         clearUsers(){
-            this.$store.dispatch("clearUsers")
-         },
-
     },
     computed: {
         users(){
@@ -16,6 +12,9 @@ const miMixinGlobal = {
         },
         isLog(){
             return this.$store.state.isLog
+        },
+        isAuth(){
+            return this.$store.state.isAuth
         },
         userLoged(){
             return this.$store.state.user

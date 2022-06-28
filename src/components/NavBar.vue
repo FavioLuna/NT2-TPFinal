@@ -33,9 +33,16 @@
 
           <li v-if="isAuth" class="nav-item">
             <router-link to="/user/settings">
-              <a class="nav-link" href="#">User</a>
+              <a class="nav-link" href="#">User Info</a>
             </router-link>
           </li>
+
+          <li v-if="isAuth" class="nav-item">
+            <router-link to="/users">
+              <a class="nav-link" href="#">Users</a>
+            </router-link>
+          </li>
+
         </ul>
       </div>
     </nav>
