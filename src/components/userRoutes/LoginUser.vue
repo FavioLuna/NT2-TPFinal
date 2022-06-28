@@ -96,7 +96,7 @@
         {
           console.error('Error en login()');
           this.errorValidacion = true
-          setTimeout(() => this.errorValidacion = false, 8000);
+          setTimeout(() => this.errorValidacion = false, 5000);
         }
       },
       checkUser(email, password){

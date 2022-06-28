@@ -35,9 +35,6 @@
     mounted () {
 
     },
-    beforeMount(){
-      this.$store.dispatch("getUsuariosAxios")
-    },
     data () {
       return {
 
@@ -61,5 +58,10 @@
   .jumbotron{
     background-color: rgb(49, 94, 192);
     color: black;
+  }
+  td{
+    background-color: grey;
+    color:black;
+    font-weight: bold;
   }
 </style>
