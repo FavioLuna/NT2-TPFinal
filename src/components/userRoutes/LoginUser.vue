@@ -101,9 +101,9 @@
       if (this.loggedIn) {
         this.$router.push('/profile');
       }
-    }
+    },
+  }
 }
-
 
 </script>
 
