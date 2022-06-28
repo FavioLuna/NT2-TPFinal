@@ -119,7 +119,18 @@
       }
     },
     computed: {
+<<<<<<< HEAD
+      loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+      },
+      created() {
+      if (this.loggedIn) {
+        this.$router.push('/profile');
+      }
+    },
+=======
       
+>>>>>>> 15faa5bc46ab1ba42f4126a587dcea91968035cc
   }
 }
 
