@@ -1,6 +1,10 @@
 <template>
   <section class="src-components-forms-user">
     <div class="jumbotron">
+      <div v-if="borrar" class="alert alert-danger" role="alert">
+        Deleted successfully
+      </div>
+      <div v-if="!borrar" class="jumbotron2">
         <h1>User Info</h1>
         <hr>
         <h3>Name: {{userLoged.name}}</h3>
@@ -18,15 +22,16 @@
         <button class="btn btn-danger ml-4" @click="doLogout()">Logout</button>
 
         <button class="btn btn-danger ml-4" @click="deleteU()">Delete User</button>
+      </div>
+
+
 
 
         <div v-if="success" class="alert alert-success" role="alert">
           Changed successfully
         </div>
 
-        <div v-if="borrar" class="alert alert-success" role="alert">
-          Changed successfully
-        </div>
+
 
         <div v-show="changeInfo" class="jumbotron">
             <vue-form  :state="formState" @submit.prevent="enviar()">
@@ -117,10 +122,11 @@
         this.borrar = true,
         setTimeout(() => {
           this.borrar = false 
+          this.$store.dispatch("deleteUser")
+          this.$router.push("/")
           },
         3000)
-        this.$store.dispatch("deleteUser")
-        this.$router.push("/")
+        
       }
     },
     computed: {
