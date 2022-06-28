@@ -1,10 +1,12 @@
 <template>
   <section class="src-components-forms-user">
     <div class="jumbotron">
-      <vue-form :state="formState" @submit.prevent="enviar()">
+      <div v-if="success" class="alert alert-success" role="alert">
+        Ingreso valido!
+      </div>
+      <vue-form v-if="!success" :state="formState" @submit.prevent="enviar()">
         <h1>Login</h1>
-        <hr><hr>      
-
+        <hr><hr>     
         <validate tag="div">
           <label for="email">email</label>
           <input 
@@ -42,6 +44,9 @@
 
        <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="login()">Enviar</button>
       </vue-form>
+      <div v-if="errorValidacion" class="alert alert-danger" role="alert">
+        Email or password invalid
+      </div>
      </div>
   </section>
 </template>
@@ -50,50 +55,71 @@
   export default  {
     name: 'src-components-forms-user',
     props: [],
-    mounted () {
+    beforeMount(){
 
+    },
+    mounted () {
+      console.log('mounted')
+      this.$store.dispatch("getUsers")
     },
     data () {
       return {
-        user: new User('', ''),
-        loading: false,
-        message: ''
+        formState: {},
+        formData: this.getInicialData(),
+        passwordMin: 8,
+        errorValidacion: false,
+        success: false,
       }
     },
     methods: {
-      handleLogin() {
-        this.loading = true;
-        this.$validator.validateAll().then(isValid => {
-          if (!isValid) {
-            this.loading = false;
-            return;
-          }
-          if (this.user.email && this.user.password) {
-            this.$store.dispatch('auth/login', this.user).then(
-              () => {
-                this.$router.push('/user');
-              },
-              error => {
-                this.loading = false;
-                this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              }
-            );
-          }
-        });
+      getInicialData(){
+        return{
+          email:'',
+          password: '',
+        }
       },
       enviar(){
         this.formData = this.getInicialData();
         this.formState._reset();
       },
       login(){
-        this.logs.push(this.formData)
-        this.$store.dispatch("login", this.formData)
+        let user = this.checkUser(this.formData.email, this.formData.password)
+        if (user) {
+          console.log(user)
+          this.$store.dispatch("login", user)
+          this.success = true
+          setTimeout(() => {
+            this.success= false 
+            this.$router.push('/user/settings')},
+            3000)
+        }else
+        {
+          console.error('Error en login()');
+          this.errorValidacion = true
+          setTimeout(() => this.errorValidacion = false, 8000);
+        }
+      },
+      checkUser(email, password){
+        let encontrado = false
+        let i = 0
+        let user = null
+        try {
+          while (!encontrado) {
+          if (this.users[i].email == email && this.users[i].password == password) {
+            encontrado = true
+            user = this.users[i]
+          }
+          i ++
+        }
+        return user
+        } catch (error) {
+          console.log(error.messages, error)
+        }
+        
       }
     },
     computed: {
+<<<<<<< HEAD
       loggedIn() {
       return this.$store.state.auth.status.loggedIn;
       },
@@ -102,6 +128,9 @@
         this.$router.push('/profile');
       }
     },
+=======
+      
+>>>>>>> 15faa5bc46ab1ba42f4126a587dcea91968035cc
   }
 }
 

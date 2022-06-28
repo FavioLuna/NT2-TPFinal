@@ -13,23 +13,30 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
 
-          <li class="nav-item">
+          <li v-if="!isLog" class="nav-item">
             <router-link to="/user">
               <a class="nav-link" href="#">User registration</a>
             </router-link>
           </li>
 
-          <li class="nav-item">
+          <li v-if="!isLog" class="nav-item">
             <router-link  to="/user/login">
               <a class="nav-link" href="#">Login</a>
             </router-link>
           </li>
 
-          <li class="nav-item">
+          <li v-if="isLog" class="nav-item">
             <router-link to="/user/settings">
-              <a class="nav-link" href="#">User</a>
+              <a class="nav-link" href="#">User Info</a>
             </router-link>
           </li>
+
+          <li v-if="isAuth" class="nav-item">
+            <router-link to="/users">
+              <a class="nav-link" href="#">Users</a>
+            </router-link>
+          </li>
+
         </ul>
       </div>
     </nav>

@@ -3,13 +3,30 @@
     <div class="jumbotron">
         <h1>User Info</h1>
         <hr>
-        <h3>Name: {{this.getUserLoged["name"]}}</h3>
+        <h3>Name: {{userLoged.name}}</h3>
         <hr>
-        <h3>Email: {{this.getUserLoged["email"]}}</h3>
+        <h3>Lastname: {{userLoged.lastname}}</h3>
         <hr>
-        <h3>Fecha de creacion: {{this.getUserLoged["createdAt"]}}</h3>
+        <h3>Edad: {{userLoged.edad}}</h3>
+        <hr>
+        <h3>Email: {{userLoged.email}}</h3>
         <hr>
         <button class="btn btn-success my-4" @click="change()">Cambiar nombre</button>
+
+        <!-- <button class="btn btn-success ml-4" @click="changePassword()">Cambiar password</button> -->
+
+        <button class="btn btn-danger ml-4" @click="doLogout()">Logout</button>
+
+        <button class="btn btn-danger ml-4" @click="deleteU()">Delete User</button>
+
+
+        <div v-if="success" class="alert alert-success" role="alert">
+          Changed successfully
+        </div>
+
+        <div v-if="borrar" class="alert alert-success" role="alert">
+          Changed successfully
+        </div>
 
         <div v-show="changeInfo" class="jumbotron">
             <vue-form  :state="formState" @submit.prevent="enviar()">
@@ -33,7 +50,7 @@
                 </field-messages> 
             </validate>
 
-            <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="changeName()">Enviar</button>
+            <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="changeName()">Cambiar</button>
         </vue-form>
         </div>
         
@@ -54,28 +71,56 @@
         formState: {},
         formData: this.getInicialData(),
         passwordMin: 8,
-        changeInfo: false
+        changeInfo: false,
+        success: false,
+        borrar: false,
       }
     },
     methods: {
       getInicialData(){
         return{
-          name:'',
-          changeInfo: false
+          name:'',      
         }
       },
       change(){
         this.changeInfo = true
+      },
+      changePassword(){
+        this.$router.push('/user/change-password')
       },
       enviar(){
         this.formData = this.getInicialData();
         this.formState._reset();
       },
       changeName(){
-        const token = this.getToken()
-        const credentials = {... this.formData, token}
-        console.log(credentials)
-        this.$store.dispatch("changeName", credentials)
+        let newUser = {
+          name : this.formData.name,
+/*           lastname : this.userLoged.lastname,
+          edad : this.userLoged.edad,
+          email : this.userLoged.email,
+          password: this.userLoged.password,
+          admin : this.userLoged.admin */
+        }
+        this.$store.dispatch("changeName", newUser)
+        this.success = true
+        this.changeInfo = false
+        setTimeout(() => {
+          this.success= false 
+          },
+        3000)
+      },
+      doLogout(){
+        this.$store.dispatch("logout")
+        this.$router.push("/")
+      },
+      deleteU(){
+        this.borrar = true,
+        setTimeout(() => {
+          this.borrar = false 
+          },
+        3000)
+        this.$store.dispatch("deleteUser")
+        this.$router.push("/")
       }
     },
     computed: {
