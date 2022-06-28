@@ -85,10 +85,6 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         commit('saveUser', null)
         commit('isLog', false)
       },
-      clearUsers({commit}){
-        commit('clearU')
-  
-      }
 
       },
     mutations:{
@@ -108,8 +104,5 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       postSuccess(state, rta){
         state.postSuccess = rta
       },
-      clearU(state){
-        state.users = 0
-      }
     }
 })
