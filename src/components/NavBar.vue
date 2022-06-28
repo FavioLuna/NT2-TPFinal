@@ -13,14 +13,14 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
 
-          <li v-if="!isAuth" class="nav-item">
+          <li v-if="!isLog" class="nav-item">
             <router-link to="/user">
               <a class="nav-link" href="#">User registration</a>
             </router-link>
           </li>
 
-          <li v-if="!isAuth" class="nav-item">
-            <router-link to="/user/login">
+          <li v-if="!isLog" class="nav-item">
+            <router-link  to="/user/login">
               <a class="nav-link" href="#">Login</a>
             </router-link>
           </li>

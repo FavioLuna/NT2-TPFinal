@@ -1,10 +1,12 @@
 <template>
   <section class="src-components-forms-user">
     <div class="jumbotron">
-      <vue-form :state="formState" @submit.prevent="enviar()">
+      <div v-if="success" class="alert alert-success" role="alert">
+        Ingreso valido!
+      </div>
+      <vue-form v-if="!success" :state="formState" @submit.prevent="enviar()">
         <h1>Login</h1>
-        <hr><hr>      
-
+        <hr><hr>     
         <validate tag="div">
           <label for="email">email</label>
           <input 
@@ -42,23 +44,31 @@
 
        <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="login()">Enviar</button>
       </vue-form>
+      <div v-if="errorValidacion" class="alert alert-danger" role="alert">
+        Email or password invalid
+      </div>
      </div>
   </section>
 </template>
 
 <script lang="js">
-
   export default  {
     name: 'src-components-forms-user',
     props: [],
-    mounted () {
+    beforeMount(){
 
+    },
+    mounted () {
+      console.log('mounted')
+      this.$store.dispatch("getUsers")
     },
     data () {
       return {
         formState: {},
         formData: this.getInicialData(),
-        logs: []
+        passwordMin: 8,
+        errorValidacion: false,
+        success: false,
       }
     },
     methods: {
@@ -73,15 +83,45 @@
         this.formState._reset();
       },
       login(){
-        this.logs.push(this.formData)
-        this.$store.dispatch("login", this.formData)
+        let user = this.checkUser(this.formData.email, this.formData.password)
+        if (user) {
+          console.log(user)
+          this.$store.dispatch("login", user)
+          this.success = true
+          setTimeout(() => {
+            this.success= false 
+            this.$router.push('/user/settings')},
+            3000)
+        }else
+        {
+          console.error('Error en login()');
+          this.errorValidacion = true
+          setTimeout(() => this.errorValidacion = false, 8000);
+        }
+      },
+      checkUser(email, password){
+        let encontrado = false
+        let i = 0
+        let user = null
+        try {
+          while (!encontrado) {
+          if (this.users[i].email == email && this.users[i].password == password) {
+            encontrado = true
+            user = this.users[i]
+          }
+          i ++
+        }
+        return user
+        } catch (error) {
+          console.log(error.messages, error)
+        }
+        
       }
     },
     computed: {
-
-    }
+      
+  }
 }
-
 
 </script>
 
