@@ -12,6 +12,9 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       users:[],
       user:{},
       isAuth: false
+
+
+      
       //--------
     },
     actions:{
