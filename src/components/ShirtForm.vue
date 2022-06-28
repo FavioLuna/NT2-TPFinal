@@ -130,6 +130,45 @@
           </field-messages> 
         </validate>
 
+           <validate tag="div">
+            <label for="team">Team</label>
+            <input 
+            type="text" 
+            id="team" 
+            class="form-control" 
+            autocomplete="off" 
+            v-model.trim="formData.team" 
+            required
+            name="team"
+            />
+  
+            <field-messages name="team" show="$dirty">
+              <div slot="required" class="alert alert-danger mt-1">Required</div>
+              
+              
+            </field-messages> 
+          </validate>
+
+         <validate tag="div">
+          <label for="league">League</label>
+          <input 
+          type="text" 
+          id="league" 
+          class="form-control" 
+          autocomplete="off" 
+          v-model.trim="formData.league" 
+          required
+          name="league"
+          />
+
+          <field-messages name="league" show="$dirty">
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            
+            
+          </field-messages> 
+        </validate>
+
+
        <button class="btn btn-success my-4" :disabled="formState.$invalid" @click="postShirt()">Enviar</button>
       </vue-form>
      </div>
@@ -167,7 +206,8 @@
           size: '',
           img: '',
           price: '',
-
+          league: '',
+          team: ''
           
         }
       },
@@ -185,7 +225,10 @@ enviar(){
           year: this.formData.year,
           size: this.formData.size,
           img: this.formData.img,
-          price: this.formData.price
+          price: this.formData.price,
+          league: this.formData.league,
+          team: this.formData.team,
+
         }
         this.$store.dispatch("postShirt", newShirt)
       }

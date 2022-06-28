@@ -111,6 +111,18 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
         console.error('Error Axios', error)
       }
     },
+
+    async deleteShirt({commit}) {
+      try {
+        await axios.delete(URL + '/shirt/' + `${this.state.shirt.id}`,  {'content-type' : 'application/json'})
+        console.log('AXIOS delete user')
+        commit('saveShirt', null)
+        console.log(this.state.shirt)
+      }
+      catch(error) {
+        console.error('Error en deleteShirt()', error.message)
+      }
+    },
       //---------------------------------
       //          Shirt Actions
       //---------------------------------
