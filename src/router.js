@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import FormsUser from "./components/userRoutes/FormsUser.vue"
 import LoginUser from "./components/userRoutes/LoginUser.vue"
 import Settings from "./components/userRoutes/SettingsUser.vue"
+import ChangePassword from "./components/userRoutes/ChangePassword.vue"
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ export const router = new VueRouter({
         { path: '/user', component: FormsUser},
         { path: '/user/login', component: LoginUser},
         { path: '/user/settings', component: Settings},
-        { path: '/user', component: LoginUser},
+        { path: '/user/change-password', component: ChangePassword},
         { path: '/user/me', component: LoginUser},
 
     ]

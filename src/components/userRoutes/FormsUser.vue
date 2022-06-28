@@ -26,6 +26,52 @@
         </validate>        
 
         <validate tag="div">
+          <label for="lastname">lastname</label>
+          <input 
+          type="text" 
+          id="lastname" 
+          class="form-control" 
+          autocomplete="off" 
+          v-model.trim="formData.lastname" 
+          required
+          lastname="lastname"
+          no-espacios
+          />
+
+          <field-messages lastname="lastname" show="$dirty">
+            <div slot="required" class="alert alert-danger mt-1">This field is required</div>
+            <div slot="no-espacios" class="alert alert-danger mt-1">
+              El campo no permite espacios intermedios.
+            </div>     
+          </field-messages> 
+        </validate>    
+
+        <validate tag="div">
+          <label for="edad">Edad</label>
+          <input 
+          type="number" 
+          id="edad" 
+          class="form-control" 
+          autocomplete="off" 
+          v-model.trim="formData.edad" 
+          required
+          name="edad"
+          :min="edadMin"
+          :max="edadMax"
+          />
+
+          <field-messages name="edad" show="$dirty">
+            <div slot="required" class="alert alert-danger mt-1">Campo requerido</div>
+            <div slot="min" class="alert alert-danger mt-1">
+              La edad minimia permitida es de {{edadMin}} años
+            </div>
+            <div slot="max" class="alert alert-danger mt-1">
+              La edad máxima permitida es de {{edadMax}} años
+            </div>
+          </field-messages> 
+        </validate>
+
+        <validate tag="div">
           <label for="email">email</label>
           <input 
           type="email" 
@@ -89,15 +135,19 @@
       return {
         formState: {},
         formData: this.getInicialData(),
-        passwordMin: 8
+        passwordMin: 8,
+        edadMin: 16,
+        edadMax: 120,
       }
     },
     methods: {
       getInicialData(){
         return{
           name:'',
+          lastname: '',
           email:'',
           password: '',
+          edad: ''
         }
       },
       enviar(){
@@ -107,10 +157,13 @@
       postUsuario(){
         let newUser = {
           name : this.formData.name, 
+          lastname: this.formData.lastname,
           email : this.formData.email, 
-          password: this.formData.password
+          password: this.formData.password,
+          edad: this.formData.edad
         }
         this.$store.dispatch("postUser", newUser)
+        this.$router.push('/login')
       }
     },
     computed: {

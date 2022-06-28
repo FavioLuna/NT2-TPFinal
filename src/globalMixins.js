@@ -7,11 +7,18 @@ const miMixinGlobal = {
          },
          clearUsers(){
             this.$store.dispatch("clearUsers")
-         }
+         },
+
     },
     computed: {
         users(){
             return this.$store.state.users
+        },
+        isLog(){
+            return this.$store.state.isLog
+        },
+        userLoged(){
+            return this.$store.state.user
         }
     }
 }
