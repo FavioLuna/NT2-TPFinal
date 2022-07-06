@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
       <router-link to="/">
-        <a class="navbar-brand" href="#">Home</a>
+        <a class="navbar-brand" href="#" to="/shirts">Home</a>
       </router-link>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -14,7 +14,6 @@
           v-model.trim="formData.name" 
           required
           name="name"
-          no-espacios
           />
 
           <field-messages name="name" show="$dirty">
@@ -32,10 +31,18 @@
           v-model.trim="formData.description" 
           required
           name="description"
+          :minlength="minDescription"
+          :maxlength="maxDescription"
           />
 
           <field-messages name="description" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>     
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="minlength" class="alert alert-danger mt-1">
+              La descripcion minimia permitida es de {{minDescription}} caracteres
+            </div>
+            <div slot="maxlength" class="alert alert-danger mt-1">
+              La descripcion máxima permitida es de {{maxDescription}} caracteres
+            </div>
           </field-messages> 
         </validate>
 
@@ -71,10 +78,18 @@
           required
           name="size"
           no-espacios
+          :min="minSize"
+          :max="maxSize"
           />
 
           <field-messages name="size" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>     
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="min" class="alert alert-danger mt-1">
+              El size minimo permitido es {{minSize}} 
+            </div>
+            <div slot="max" class="alert alert-danger mt-1">
+              El size máximo permitido es {{maxSize}} 
+            </div>    
           </field-messages> 
         </validate>
 
@@ -89,10 +104,18 @@
           required
           name="number"
           no-espacios
+          :min="minNumber"
+          :max="maxNumber"
           />
 
           <field-messages name="number" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>     
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="min" class="alert alert-danger mt-1">
+              El number minimo permitido es {{minNumber}} 
+            </div>
+            <div slot="max" class="alert alert-danger mt-1">
+              El number máximo permitido es {{maxNumber}} 
+            </div>         
           </field-messages> 
         </validate>
 
@@ -107,10 +130,18 @@
           required
           name="year"
           no-espacios
+          :min="minYear"
+          :max="maxYear"
           />
 
           <field-messages name="year" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>     
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="min" class="alert alert-danger mt-1">
+              El year minimo permitido es de {{minYear}} 
+            </div>
+            <div slot="max" class="alert alert-danger mt-1">
+              El year máximo permitido es de {{maxYear}} 
+            </div>         
           </field-messages> 
         </validate>
 
@@ -124,36 +155,42 @@
           v-model="formData.price" 
           required
           name="price"
-          :minPrice="priceMin"
+          :min="priceMin"
           no-espacios
           />
 
           <field-messages name="price" show="$dirty">
             <div slot="required" class="alert alert-danger mt-1">Required</div>   
-            <div slot="minPrice" class="alert alert-danger mt-1">
+            <div slot="min" class="alert alert-danger mt-1">
               Negative or zero prices are not accepted
             </div>  
           </field-messages> 
         </validate>
 
-           <validate tag="div">
-            <label for="team">Team</label>
-            <input 
-            type="text" 
-            id="team" 
-            class="form-control" 
-            autocomplete="off" 
-            v-model.trim="formData.team" 
-            required
-            name="team"
-            />
-  
-            <field-messages name="team" show="$dirty">
-              <div slot="required" class="alert alert-danger mt-1">Required</div>
-              
-              
-            </field-messages> 
-          </validate>
+        <validate tag="div">
+          <label for="team">Team</label>
+          <input 
+          type="text" 
+          id="team" 
+          class="form-control" 
+          autocomplete="off" 
+          v-model.trim="formData.team" 
+          required
+          name="team"
+          :minlength="minTeam"
+          :maxlength="maxTeam"
+          />
+
+          <field-messages name="team" show="$dirty">
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="minlength" class="alert alert-danger mt-1">
+              El nombre de equipo minimo permitido es de {{minTeam}} 
+            </div>
+            <div slot="maxlength" class="alert alert-danger mt-1">
+              El nombre de equipo máximo permitido es de {{maxTeam}} 
+            </div>    
+          </field-messages> 
+        </validate>
 
          <validate tag="div">
           <label for="league">League</label>
@@ -165,10 +202,18 @@
           v-model.trim="formData.league" 
           required
           name="league"
+          :minlength="minLeague"
+          :maxlength="maxLeague"
           />
 
           <field-messages name="league" show="$dirty">
             <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="minlength" class="alert alert-danger mt-1">
+              El nombre de liga minimo permitido es de {{minLeague}} 
+            </div>
+            <div slot="maxlength" class="alert alert-danger mt-1">
+              El nombre de liga máximo permitido es de {{maxLeague}} 
+            </div>    
           </field-messages> 
         </validate>
 
@@ -194,8 +239,8 @@
       return {
         formState: {},
         formData: this.getInicialData(),
-        numeroMin: 1,
-        numMax: 99,
+        minNumber: 1,
+        maxNumber: 99,
         priceMin: 1,
         minSize: 20,
         maxSize: 60,

@@ -52,19 +52,6 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
           console.error('Error en changeName()', error.message)
         }
       },
-/*       async changePass({commit}, newUser) {
-        try {
-          let { data: user } = await axios.put(URL + '/user/' + `${this.state.user.id}`, newUser, {'content-type' : 'application/json'})
-          console.log('AXIOS Put user name', user)
-          commit('saveUser', user)
-          if (user.admin) {
-            commit('isAuth', true)
-          }
-        }
-        catch(error) {
-          console.error('Error en postUsers()', error.message)
-        }
-      }, */
       async deleteUser({commit}) {
         try {
           await axios.delete(URL + '/user/' + `${this.state.user.id}`,  {'content-type' : 'application/json'})
