@@ -4,8 +4,9 @@ import FormsUser from "./components/userRoutes/FormsUser.vue"
 import LoginUser from "./components/userRoutes/LoginUser.vue"
 import Settings from "./components/userRoutes/SettingsUser.vue"
 import AdminGetUsers from "./components/userRoutes/AdminGetUsers.vue"
-import ShirtForm from "./components/ShirtForm"
-import ListShirt from "./components/ListShirt.vue";
+import ShirtForm from "./components/ShirtForm.vue"
+import ListShirt from "./components/ListShirt.vue"
+import SetShirt from "./components/SetShirt.vue"
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,7 @@ export const router = new VueRouter({
         { path: '/users', component: AdminGetUsers},
         { path: '/shirt', component: ShirtForm},
         { path: '/shirts', component: ListShirt},
+        { path: '/shirt/set', component: SetShirt},
         { path: '*', redirect: '/'},
         
     ]

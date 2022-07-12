@@ -1,7 +1,10 @@
 <template>
   <section class="src-components-index-formulario">
     <div class="jumbotron">
-      <vue-form :state="formState" @submit.prevent="enviar()">
+      <div v-if="success" class="alert alert-success" role="alert">
+        Shirt added successfully
+      </div>
+      <vue-form v-if="!success"  :state="formState" @submit.prevent="enviar()">
         <h1>Create Shirt</h1>
         <hr><hr>
         <validate tag="div">
@@ -14,10 +17,14 @@
           v-model.trim="formData.name" 
           required
           name="name"
+          :minlength="nameMin"
           />
 
           <field-messages name="name" show="$dirty">
-            <div slot="required" class="alert alert-danger mt-1">Required</div>   
+            <div slot="required" class="alert alert-danger mt-1">Required</div>
+            <div slot="minlength" class="alert alert-danger mt-1">
+              La cantidad de caracteres minimos es {{nameMin}} 
+            </div>
           </field-messages> 
         </validate>        
 
@@ -239,6 +246,7 @@
       return {
         formState: {},
         formData: this.getInicialData(),
+        nameMin: 2,
         minNumber: 1,
         maxNumber: 99,
         priceMin: 1,
@@ -251,7 +259,8 @@
         maxTeam: 20,
         minTeam: 2,
         minLeague: 2,
-        maxLeague: 20
+        maxLeague: 20,
+        success: false
       }
     },
    methods: {
@@ -286,9 +295,14 @@
           price: this.formData.price,
           league: this.formData.league,
           team: this.formData.team,
-
         }
+        this.success = true
         this.$store.dispatch("postShirt", newShirt)
+        setTimeout(()=> {
+          this.success = false
+          this.$router.push('/')}, 
+          2000
+        )
       }
    },
     computed: {

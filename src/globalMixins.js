@@ -24,6 +24,9 @@ const miMixinGlobal = {
         },
         shirts(){
             return this.$store.state.shirts
+        },
+        shirtState(){
+            return this.$store.state.shirt
         }
     }
 }

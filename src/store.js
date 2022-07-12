@@ -13,6 +13,7 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       shirts:[],
       entro: false,
       user:{},
+      shirt:{},
       postSuccess: false,
       isAuth: false,
       isLog: false
@@ -80,6 +81,9 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       //---------------------------------
       //          Shirt Actions
       //---------------------------------
+      getShirt({commit}, shirt){
+        commit('getShirt', shirt)
+      },
       async postShirt({commit}, newShirt) {
         try {
           let { data: shirt } = await axios.post(URL + '/shirt', newShirt, {'content-type' : 'application/json'})
@@ -107,9 +111,8 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
     async deleteShirt({commit}) {
       try {
         await axios.delete(URL + '/shirt/' + `${this.state.shirt.id}`,  {'content-type' : 'application/json'})
-        console.log('AXIOS delete user')
-        commit('saveShirt', null)
-        console.log(this.state.shirt)
+        console.log('AXIOS delete shirt')
+        commit('clearShirt')
       }
       catch(error) {
         console.error('Error en deleteShirt()', error.message)
@@ -118,14 +121,11 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
 
     async changeShirt({commit}, newShirt) {
       try {
-        let { data: shirt } = await axios.put(URL + '/shirt/' + `${this.state.user.id}`, newShirt, {'content-type' : 'application/json'})
-        commit('saveShirt', shirt)
-        if (shirt.admin) {
-          commit('isAuth', true)
-        }
+        await axios.put(URL + '/shirt/' + `${this.state.shirt.id}`, newShirt, {'content-type' : 'application/json'})
+        commit('clearShirt')
       }
       catch(error) {
-        console.error('Error en changeName()', error.message)
+        console.error('Error en changeShirt()', error.message)
       }
     },
     }, 
@@ -163,6 +163,12 @@ export default new Vuex.Store({ //Funcion constructora estatica, construye una i
       },
       clearS(state){
         state.shirts = 0
+      },
+      getShirt(state, shirt){
+        state.shirt = shirt
+      },
+      clearShirt(state){
+        state.shirt = {}
       }
     }
 })

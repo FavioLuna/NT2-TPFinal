@@ -90,13 +90,13 @@
           this.success = true
           setTimeout(() => {
             this.success= false 
-            this.$router.push('/user/settings')},
+            this.$router.push('/')},
             3000)
         }else
         {
           console.error('Error en login()');
           this.errorValidacion = true
-          setTimeout(() => this.errorValidacion = false, 5000);
+          setTimeout(() => this.errorValidacion = false, 3000);
         }
       },
       checkUser(email, password){

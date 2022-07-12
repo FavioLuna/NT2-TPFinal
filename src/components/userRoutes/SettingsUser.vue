@@ -17,8 +17,6 @@
         <hr>
         <button class="btn btn-success my-4" @click="change()">Cambiar nombre</button>
 
-        <!-- <button class="btn btn-success ml-4" @click="changePassword()">Cambiar password</button> -->
-
         <button class="btn btn-danger ml-4" @click="doLogout()">Logout</button>
 
         <button class="btn btn-danger ml-4" @click="deleteU()">Delete User</button>
@@ -90,9 +88,6 @@
       change(){
         this.changeInfo = true
       },
-      changePassword(){
-        this.$router.push('/user/change-password')
-      },
       enviar(){
         this.formData = this.getInicialData();
         this.formState._reset();
@@ -100,11 +95,6 @@
       changeName(){
         let newUser = {
           name : this.formData.name,
-/*           lastname : this.userLoged.lastname,
-          edad : this.userLoged.edad,
-          email : this.userLoged.email,
-          password: this.userLoged.password,
-          admin : this.userLoged.admin */
         }
         this.$store.dispatch("changeName", newUser)
         this.success = true

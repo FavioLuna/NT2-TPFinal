@@ -1,8 +1,8 @@
 <template>
   <section class="src-components-get-users">
     <div class="col">
-      <div class="card" >
-        
+      <div v-show="successDelete" class="alert alert-success" role="alert">Camiseta elminada correctamente!</div>
+      <div class="card" v-show="!successDelete">
         <div class="card-body" :style="{backgroundColor: this.setColor(verMas).backColor}">
           <h4 :class="{cardTitle: verMas}">{{cardData.name}}</h4>
           <p :class="{cardSubtitle: verMas}">{{cardData.team}} {{cardData.league}} {{cardData.year}}</p>
@@ -13,9 +13,14 @@
             <p>Numero: {{cardData.number}}</p>
             <p>Talle: {{cardData.size}}</p>
             <p>Precio: {{cardData.price | precio('$')}}</p>
+            <button v-show="isAuth" class="btn btn-success my-4" @click="change()">Cambiar datos</button>
+            <br>
+            <button v-show="isAuth" class="btn btn-danger ml-1" @click="eliminar()">Eliminar camiseta</button>
           </div>
-
+          <br>
           <a class="btn btn-primary" @click="showMore()">{{texto}}</a>
+      
+
         </div>
       </div>
     </div>
@@ -34,12 +39,14 @@
     data () {
       return {
         verMas: false,
-        texto: "Ver más"
+        texto: "Ver más",
+        successDelete: false
       }
     },
     methods: {
       showMore(){
         this.verMas ? (this.verMas = false, this.texto = "Ver más") : (this.verMas = true, this.texto = "Ver menos")
+        this.$store.dispatch('getShirt', this.cardData)
       },
       setColor(show){
         let backColor = 'white' 
@@ -49,6 +56,17 @@
         return{
           backColor,
         } 
+      },
+      change(){
+        this.$router.push('/shirt/set')
+      },
+      eliminar(){
+        this.$store.dispatch("deleteShirt")
+        this.successDelete = true
+        setTimeout(() => {
+          this.successDelete= false
+          this.getUsers()},
+          2000)
       }
     },
     computed: {
